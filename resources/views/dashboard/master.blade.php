@@ -6,9 +6,8 @@
     <div class="wrapper">
         @include('dashboard.layout.navbar')
         @include('dashboard.layout.sidpar')
-        @include('dashboard.layout.header')
         
-        @yield(section: 'content')
+        @yield('content')
 
         <!-- /.content -->
         @include('dashboard.layout.footer')

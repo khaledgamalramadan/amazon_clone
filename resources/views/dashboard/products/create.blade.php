@@ -8,12 +8,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">إضافة منتج جديد</h1>
+                        <h1 class="m-0 text-dark">Add New Product</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">الرئيسية</a></li>
-                            <li class="breadcrumb-item active">إضافة منتج</li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Add Product</li>
                         </ol>
                     </div>
                 </div>
@@ -27,75 +27,47 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">إضافة منتج جديد</h3>
+                            <h3 class="card-title">Add New Product</h3>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('dashboard.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="brand" class="form-label">العلامة التجارية</label>
-                                    <input type="text" class="form-control" name="brand" value="{{ old('brand') }}" required>
-                                    @error('brand')
+                                    <label for="name" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
+                                    @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="title" class="form-label">اسم المنتج</label>
-                                    <input type="text" class="form-control" name="title" value="{{ old('title') }}" required>
-                                    @error('title')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">الوصف</label>
+                                    <label for="description" class="form-label">Description</label>
                                     <textarea class="form-control" name="description">{{ old('description') }}</textarea>
                                     @error('description')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">السعر (EGP)</label>
+                                    <label for="price" class="form-label">Price ($)</label>
                                     <input type="number" step="0.01" class="form-control" name="price" value="{{ old('price') }}" required>
                                     @error('price')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="old_price" class="form-label">السعر القديم (EGP)</label>
-                                    <input type="number" step="0.01" class="form-control" name="old_price" value="{{ old('old_price') }}">
-                                    @error('old_price')
+                                    <label for="stock" class="form-label">Stock Quantity</label>
+                                    <input type="number" class="form-control" name="stock" value="{{ old('stock') }}" min="0">
+                                    @error('stock')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="rating" class="form-label">التقييم (1-5)</label>
-                                    <input type="number" class="form-control" name="rating" value="{{ old('rating') }}" min="1" max="5" required>
-                                    @error('rating')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="reviews_count" class="form-label">عدد التقييمات</label>
-                                    <input type="number" class="form-control" name="reviews_count" value="{{ old('reviews_count') }}" min="0" required>
-                                    @error('reviews_count')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="delivery_date" class="form-label">تاريخ التوصيل</label>
-                                    <input type="date" class="form-control" name="delivery_date" value="{{ old('delivery_date') }}" required>
-                                    @error('delivery_date')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="image" class="form-label">صورة المنتج</label>
+                                    <label for="image" class="form-label">Product Image</label>
                                     <input type="file" class="form-control" name="image" accept="image/*" required>
                                     @error('image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <button type="submit" class="btn btn-primary">إضافة المنتج</button>
+                                <button type="submit" class="btn btn-primary">Add Product</button>
                             </form>
                         </div>
                     </div>

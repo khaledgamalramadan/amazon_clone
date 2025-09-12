@@ -1,49 +1,49 @@
 @extends('theme.master')
 
+@section('title', 'Products - E-Commerce Store')
+
 @section('content')
-<div class="container">
-  <div class="container">
-    <!-- title page -->
-    <div class="row">
-      <div class="section-title">
-        <h2>Products</h2>
-        <p>There are many variations of passages of Lorem Ipsum available,<br>
-          but the majority have suffered alteration in some form.</p>
-      </div>
-    </div>
-
-    <!-- product cards wrapper -->
-    <div class="product-wrapper">
-      @forelse($products as $product)
-      <!-- single product card -->
-      <div class="product-card">
-        <img src="{{ asset($product->image) }}" alt="{{ $product->title }}">  <!-- صورة من public/products/ -->
-        <div class="product-info">
-          <h4>{{ $product->brand }}</h4>
-          <a href="{{ route('product.show', $product->id) }}">  <!-- رابط للمنتج الفردي -->
-            <p>{{ $product->title }}</p>
-          </a>
-          <div class="stars">
-            @for($i = 1; $i <= 5; $i++)
-              {{ $i <= $product->rating ? '⭐' : '☆' }}
-            @endfor
-            <span style="font-size:12px; color:#555;">{{ $product->reviews_count }}</span>
-          </div>
-          <div class="price">EGP {{ number_format($product->price, 0) }} <small>EGP {{ number_format($product->old_price, 2) }}</small></div>
-          <div class="delivery">FREE delivery <b>{{ date('D, d M', strtotime($product->delivery_date)) }}</b></div>
-          <form action="{{ route('product.addToCart', $product->id) }}" method="POST">
-            @csrf
-            <button type="submit" class="btn">Add to cart</button>
-          </form>
-        </div>
-      </div>
-      @empty
-      <div class="alert alert-info">لا توجد منتجات حاليًا. أضف بعضًا من <a href="{{ route('dashboard') }}">لوحة التحكم</a>.</div>
-      @endforelse
-    </div>
-
-    <!-- Pagination -->
-    {{ $products->links() }}
-  </div>
+<div class="page-header">
+    <h1 class="page-title">Our Products</h1>
+    <p class="page-subtitle">Discover our amazing collection of products</p>
+    <input type="text" class="search-box" placeholder="Search products...">
 </div>
+
+@if($products->count() > 0)
+    <div class="product-grid">
+        @foreach($products as $product)
+            <div class="product-card">
+                <img src="{{ asset($product->image) }}" class="product-image" alt="{{ $product->name }}">
+                <div class="product-info">
+                    <h3 class="product-title">{{ $product->name }}</h3>
+                    <p class="product-description">
+                        {{ \Illuminate\Support\Str::limit($product->description, 100) }}
+                    </p>
+                    <div class="product-price">${{ number_format($product->price, 2) }}</div>
+                    <div class="product-stock">
+                        📦 Stock: {{ $product->stock ?? 'Available' }}
+                    </div>
+                    <div class="btn-group">
+                        <a href="{{ route('product.show', $product->id) }}" class="btn btn-outline">
+                            👁️ View Details
+                        </a>
+                        <button type="button" class="btn btn-primary btn-add-cart" data-product-id="{{ $product->id }}">
+                            🛒 Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="pagination">
+        {{ $products->links() }}
+    </div>
+@else
+    <div style="text-align: center; padding: 3rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <h3>📦 No Products Found</h3>
+        <p>We're working on adding more products. Check back soon!</p>
+        <a href="{{ route('dashboard') }}" class="btn btn-primary" style="margin-top: 1rem;">Add Products</a>
+    </div>
+@endif
 @endsection

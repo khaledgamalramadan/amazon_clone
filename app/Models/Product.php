@@ -2,22 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
-
+    /**
+     * The attributes that are mass assignable.
+     */
     protected $fillable = [
-        'brand',
-        'title',
+        'name',
         'description',
         'price',
-        'old_price',
-        'rating',
-        'reviews_count',
-        'delivery_date',
-        'image'
+        'stock',
+        'image',
     ];
+
+    /**
+     * Attribute casting.
+     */
+    protected $casts = [
+        'price' => 'decimal:2',
+        'stock' => 'integer',
+    ];
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }
